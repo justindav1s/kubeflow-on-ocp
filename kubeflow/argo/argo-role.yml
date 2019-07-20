@@ -1,0 +1,32 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argo-role
+  labels:
+    app: argo
+rules:
+  - apiGroups: ["argoproj.io"]
+    resources: ["workflows", "workflows/finalizers"]
+    verbs: ["get", "list", "watch", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "delete"]
+  - apiGroups: [""]
+    resources: ["pods", "pods/exec", "pods/log"]
+    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argo-rolebinding
+  labels:
+    app: argo
+roleRef:
+  kind: Role
+  name: argo-role
+subjects:
+  - kind: ServiceAccount
+    name: argo
