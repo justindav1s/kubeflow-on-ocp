@@ -1,6 +1,5 @@
 #/bin/bash
 
-#run on the master
 
 oc project kube-system
 

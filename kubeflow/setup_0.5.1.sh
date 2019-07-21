@@ -25,4 +25,3 @@ oc project kubeflow
 
 oc expose svc argo-ui
 oc expose svc ambassador
-oc expose svc argo-ui
