@@ -55,3 +55,4 @@ fabric.properties
 
 /kubeflow/install/
 /.idea/
+/kubeflow/kubeflow-deploy.sh
