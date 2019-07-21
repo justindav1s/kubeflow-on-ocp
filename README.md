@@ -42,3 +42,19 @@ https://nvidia.github.io/nvidia-docker/
 https://github.com/argoproj/argo/blob/master/demo.md
 
 https://github.com/argoproj/argo/issues/922
+
+MiniKF
+                             ┌──────Minikube + Kubeflow + Rok = MiniKF────────┐
+                             │ Provisioning completed.                        │
+                             │                                                │
+                             │                                                │
+                             │ Services:                                      │
+                             │   * Kubeflow:   http://10.10.10.10:8080/       │
+                             │   * Rok:        http://10.10.10.10:8080/rok/   │
+                             │                                                │
+                             │ Credentials:                                   │
+                             │   * Username:   user                           │
+                             │   * Password:   12341234                       │
+                             ├────────────────────────────────────────────────┤
+                             │                   <  OK  >                     │
+                             └────────────────────────────────────────────────┘

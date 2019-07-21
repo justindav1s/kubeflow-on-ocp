@@ -9,6 +9,9 @@ metadata:
   generateName: coinflip-
 spec:
   entrypoint: coinflip
+  serviceAccountName: argo
+  securityContext:
+    privileged: true
   templates:
   - name: coinflip
     steps:
@@ -33,11 +36,15 @@ spec:
   - name: heads
     container:
       image: alpine:3.6
+      securityContext:
+        privileged: true
       command: [sh, -c]
       args: ["echo \"it was heads\""]
 
   - name: tails
     container:
       image: alpine:3.6
+      securityContext:
+        privileged: true
       command: [sh, -c]
       args: ["echo \"it was tails\""]

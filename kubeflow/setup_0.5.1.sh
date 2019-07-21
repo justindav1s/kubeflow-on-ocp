@@ -33,3 +33,7 @@ oc project kubeflow
 oc expose svc argo-ui
 oc expose svc ambassador
 oc expose svc minio-service
+
+cd argo
+
+./apply.sh

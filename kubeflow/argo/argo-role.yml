@@ -18,6 +18,50 @@ rules:
     resources: ["pods", "pods/exec", "pods/log"]
     verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
 ---
+# required by wait container to track progress of workflow
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: proxy-clusterrole-kubernetes-master
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - nodes/metrics
+      - nodes/proxy
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: workflow-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - get
+      - watch
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - pods/log
+    verbs:
+      - get
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - get
+---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -29,4 +73,31 @@ roleRef:
   name: argo-role
 subjects:
   - kind: ServiceAccount
+    name: argo
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: workflow-rolebinding
+  labels:
+    app: argo
+roleRef:
+  kind: Role
+  name: workflow-role
+subjects:
+  - kind: ServiceAccount
+    name: argo
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: proxy-clusterrole-kubernetes-master-clusterrolebinding
+  labels:
+    app: argo
+roleRef:
+  kind: ClusterRole
+  name: proxy-clusterrole-kubernetes-master
+subjects:
+  - kind: ServiceAccount
+    namespace: kubeflow
     name: argo
