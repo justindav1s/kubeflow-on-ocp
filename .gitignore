@@ -56,3 +56,4 @@ fabric.properties
 /kubeflow/install/
 /.idea/
 /kubeflow/kubeflow-deploy.sh
+/kubeflow/additional-kubeflow.yml
