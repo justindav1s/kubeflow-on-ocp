@@ -21,7 +21,15 @@ oc adm policy add-scc-to-user anyuid -z jupyter-notebook -n kubeflow
 
 ../scripts/kfctl.sh apply k8s
 
+# https://github.com/kubeflow/kubeflow/issues/3086
+oc patch --type=json clusterrole notebooks-controller -p '[{"op":"add", "path":"/rules/-", "value":{"apiGroups":["kubeflow.org"],"resources":["notebooks/finalizers"],"verbs":["*"]}}]'
+# Some informations about oc patch
+#   https://access.redhat.com/articles/3319751
+#   https://kubernetes.io/docs/tasks/run-application/update-api-object-kubectl-patch/
+#   JavaScript Object Notation (JSON) Patch: https://tools.ietf.org/html/rfc6902
+
 oc project kubeflow
 
 oc expose svc argo-ui
 oc expose svc ambassador
+oc expose svc minio-service
